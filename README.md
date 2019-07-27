@@ -1,3 +1,3 @@
 # orgkmailmail
 
-## Get eamil from gmail and push it to kafka
+## Get email from gmail and push it to kafka
