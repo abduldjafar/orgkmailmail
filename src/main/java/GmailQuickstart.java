@@ -62,9 +62,13 @@ public class GmailQuickstart {
                 .build();
 
         String user = "me";
-        ListMessagesResponse listResponse = service.users().messages().list("me").setQ("Your Grab E-Receipt").execute();
+        ListMessagesResponse listResponse = service.users()
+                .messages()
+                .list("me")
+                .setQ("Your Grab E-Receipt")
+                .setMaxResults(new Long(10000)).execute();
+
         List<Message> messages = listResponse.getMessages();
-        //Message message = service.users().messages().get(userId, messageId).setFormat("raw").execute();
 
         ProducerKafka pkafka = new ProducerKafka();
         for (Message message : messages) {
