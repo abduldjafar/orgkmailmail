@@ -12,7 +12,6 @@ import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.gmail.model.ListMessagesResponse;
 import com.google.api.services.gmail.model.Message;
-
 import java.io.*;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
@@ -64,7 +63,7 @@ public class GmailQuickstart {
         String user = "me";
         ListMessagesResponse listResponse = service.users()
                 .messages()
-                .list("me")
+                .list(user)
                 .setQ("Your Grab E-Receipt")
                 .setMaxResults(new Long(10000)).execute();
 
@@ -72,9 +71,9 @@ public class GmailQuickstart {
 
         ProducerKafka pkafka = new ProducerKafka();
         for (Message message : messages) {
-            Message messagex = service.users().messages().get("me", message.getId()).setFormat("raw").execute();
-            System.out.println(messagex.getSnippet());
-            pkafka.exec(messagex.getSnippet(),"test");
+            Message messagex = service.users().messages().get("me", message.getId()).setFormat("full").execute();
+            System.out.println(messagex.getRaw());
+            //pkafka.exec(messagex.getRaw(),"emailraw");
 
         }
     }
